@@ -16,3 +16,8 @@ shell/i/.pyfs
 ```bash
 cd test.pyfs/pyfs://
 ```
+
+It is configured to open files with a pyfs extension.  New FS files can be created with the command touch:
+```bash
+touch x.pyfs
+```
