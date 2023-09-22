@@ -14,7 +14,7 @@ shell/i/.pyfs
 
  * Can also be used manually:
 ```bash
-cd test.pyfs/pyfs://
+cd test.pyfs/pyfs.py://
 ```
 
 It is configured to open files with a pyfs extension.  New FS files can be created with the command touch:
