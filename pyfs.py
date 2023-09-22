@@ -51,7 +51,10 @@ def read_from_file(archivename):
     f_in = open(archivename, "r")
     ff = f_in.read()
     f_in.close()
-    return eval(ff)
+    if ff == "":
+        return []
+    else:
+        return eval(ff)
 
 def write_to_file(archivename, file_list):
     out_str = pprint.pformat(file_list, sort_dicts=False)
