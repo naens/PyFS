@@ -1,0 +1,182 @@
+[{'path': [],
+  'filename': 'a.txt',
+  'permission': '-rw-rw-r--',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-21-2023 18:44:00',
+  'contents': b'text of file:a\n'},
+ {'path': [],
+  'filename': 'b.txt',
+  'permission': '-rw-rw-r--',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-21-2023 18:44:00',
+  'contents': b'text of file:b\x00\n'},
+ {'path': ['d'],
+  'filename': '',
+  'permission': 'drwxrwxr-x',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-21-2023 18:44:00',
+  'contents': b''},
+ {'path': ['d'],
+  'filename': 'c.txt',
+  'permission': '-rw-rw-r--',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-21-2023 18:44:00',
+  'contents': b'text of file:c'},
+ {'path': [],
+  'filename': 'r.bin',
+  'permission': '-rw-rw-r--',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-22-2023 09:22:01',
+  'contents': bytearray(b'h\xb3\xa0\x17\xa8[O\xa5\xcd\xb1~x_\xadmC'
+                        b'\x12\r\x85\x98\xe6\xcb\xd9\xc0\n\x8d\x84\xf5'
+                        b"\xd2\xac\x81\xe9\xc49\x16/\x89tI\xec\x82\x116'\xbcsZU"
+                        b'\xecY\x9dI\x17\xc5\xfb\x9c\x00\xd4\xd37s>[9')},
+ {'path': [],
+  'filename': 'hello.txt',
+  'permission': '-rw-rw-r--',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-22-2023 13:56:01',
+  'contents': bytearray(b'Hello PyFS\nOK?')},
+ {'path': [],
+  'filename': 'pyfs.py',
+  'permission': '-rw-rw-r--',
+  'owner': 'owner',
+  'group': 'group',
+  'datetime': '09-22-2023 14:01:54',
+  'contents': bytearray(b'#!/usr/bin/env python\nimport sys\nfrom datetime i'
+                        b'mport datetime\nimport pprint\n\n# python filesyste'
+                        b'm: pyfs\n# list of files\n# file = dict(path, name'
+                        b', attributes, contents)\n# path is list of directorie'
+                        b's (strings)\n# name is stirng\n# attributes is str'
+                        b'ing, as in MC VFS\n# contents is a byte array\n# d'
+                        b'irectories are represented by a file with empty name'
+                        b'\n\n\n\n# * Command: list archivename\n# * Command: c'
+                        b'opyout archivename storedfilename extractto\n# * Comm'
+                        b'and: copyin archivename storedfilename sourcefile\n# '
+                        b'* Command: rm archivename storedfilename\n# * Command'
+                        b': mkdir archivename dirname\n# * Command: rmdir archi'
+                        b'vename dirname\n# * Command: run\n\ndef get_file_li'
+                        b'ne(file_data):\n    permission = file_data["permissio'
+                        b'n"]\n    nlinks = 1\n    owner = file_data["owner"'
+                        b']\n    group = file_data["group"]\n    size = str('
+                        b'len(file_data["contents"]))\n    filename = file_data'
+                        b'["filename"]\n    path = \'/\'.join(file_data["path'
+                        b'"])\n    file_string = path + "/" + filename\n    '
+                        b'datetime = file_data["datetime"]\n    return "{} {:3}'
+                        b' {:8} {:8} {:8} {}  {}".format(\n        permission, '
+                        b'nlinks, owner, group, size, datetime, file_strin'
+                        b'g)\n\ndef get_datetime():\n    now = datetime.now()'
+                        b'\n    #   format: MM-DD-YYYY hh:mm:ss\n    return '
+                        b'now.strftime("%m-%d-%Y %H:%M:%S")\n\n\ndef contains'
+                        b'_dir(file_dicts, path):\n    for file_dict in file_di'
+                        b'cts:\n        if file_dict["path"] == path and file_d'
+                        b'ict["contents"] == "":\n            return True\n '
+                        b'   return False\n\ndef read_from_file(archivename)'
+                        b':\n    f_in = open(archivename, "r")\n    ff = f_i'
+                        b'n.read()\n    f_in.close()\n    return eval(ff)\n\nd'
+                        b'ef write_to_file(archivename, file_list):\n    out_st'
+                        b'r = pprint.pformat(file_list, sort_dicts=False)\n    '
+                        b'f_out = open(archivename, "w")\n    f_out.write(out_s'
+                        b'tr)\n    f_out.close()\n\n# files: -rw-rw-r--\n# dir'
+                        b's:  drwxrwxr-x\ndef do_list(archivename):\n    fil'
+                        b'e_list = read_from_file(archivename)\n\n    # list'
+                        b' files\n    for file_data in file_list:\n        p'
+                        b'rint(get_file_line(file_data))\n\n# copyout archiv'
+                        b'ename storedfilename extractto\ndef do_copyout(archiv'
+                        b'ename, filename, extractto):\n    # read data\n   '
+                        b' file_list = read_from_file(archivename)\n\n    # '
+                        b"configure the path\n    path = filename.split('/'"
+                        b')\n    filename = path[-1]\n    del path[-1]\n\n    '
+                        b'contents = None\n    for (i,file_dict) in enumerate(f'
+                        b'ile_list):\n        if file_dict["path"] == path and '
+                        b'file_dict["filename"] == filename:\n            conte'
+                        b'nts = file_dict["contents"]\n\n    if not contents'
+                        b' is None:\n        f_out = open(extractto, "wb")\n'
+                        b'        f_out.write(contents)\n        f_out.clos'
+                        b'e()\n\n# copyin archivename storedfilename sourcef'
+                        b'ile\ndef do_copyin(archivename, storedfilename, sourc'
+                        b'efile):\n    # read data\n    file_list = read_fro'
+                        b'm_file(archivename)\n\n    f_in = open(sourcefile,'
+                        b' "rb")\n    contents = bytearray(f_in.read())\n   '
+                        b' f_in.close()\n\n    datetime = get_datetime()\n\n  '
+                        b'  # configure the path\n    path = storedfilename.spl'
+                        b"it('/')\n    fn = path[-1]\n    del path[-1]\n\n    "
+                        b'if fn == "": # path is directory, nothing to do here'
+                        b'\n        return\n\n    # create file_dict\n    file'
+                        b'_dict_new = {"path" : path, "filename" : fn, "permis'
+                        b'sion": "-rw-rw-r--", \n                 "owner" : "ow'
+                        b'ner", "group" : "group",\n                 "datetime"'
+                        b': datetime, "contents": contents}\n\n    existing_'
+                        b'file_index = None\n    for (i,file_dict) in enumerate'
+                        b'(file_list):\n        if file_dict["path"] == path an'
+                        b'd file_dict["filename"] == fn:\n             existing'
+                        b'_file_index = i\n             \n    if not existin'
+                        b'g_file_index is None:\n        del file_list[i]\n '
+                        b'   file_list.append(file_dict_new)\n\n    # write '
+                        b'files\n    write_to_file(archivename, file_list)\n'
+                        b'    \n\n# rm archivename storedfilename\ndef do_rm('
+                        b'archivename, filename):\n    # read data\n    file'
+                        b'_list = read_from_file(archivename)\n\n    # confi'
+                        b"gure the path\n    path = filename.split('/')\n   "
+                        b' filename = path[-1]\n    del path[-1]\n\n    index'
+                        b'_to_remove = None\n    for (i,file_dict) in enumerate'
+                        b'(file_list):\n        if file_dict["path"] == path an'
+                        b'd file_dict["filename"] == filename:\n            ind'
+                        b'ex_to_remove = i\n\n    if not index_to_remove is '
+                        b'None:\n        del file_list[index_to_remove]\n\n  '
+                        b'      # write data\n        write_to_file(archivename'
+                        b', file_list)\n\n# mkdir archivename dirname\ndef do'
+                        b'_mkdir(archivename, dirname):\n    # read data\n  '
+                        b'  file_list = read_from_file(archivename)\n\n    #'
+                        b' insert directory with whole path\n    path = dirname'
+                        b".split('/')\n    datetime = get_datetime()\n    p "
+                        b'= []\n    for dir_path in path:\n        p.append('
+                        b'dir_path)\n        if not contains_dir(file_list, p):'
+                        b'\n            new_path = p.copy()\n            new'
+                        b'_dir = {"path" : new_path, "filename" : "", "permiss'
+                        b'ion": "drwxrwxr-x", \n                       "owner" '
+                        b': "owner", "group" : "group",\n                      '
+                        b' "datetime": datetime, "contents": ""}\n            f'
+                        b'ile_list.append(new_dir)\n\n    # write data\n    w'
+                        b'rite_to_file(archivename, file_list)\n    \n# rmdi'
+                        b'r archivename dirname\ndef do_rmdir(archivename, dirn'
+                        b'ame):\n    # read data\n    file_list = read_from_'
+                        b'file(archivename)\n\n    # remove the directory\n  '
+                        b"  dd = dirname[0:-1] if dirname[-1] == '/' else dirn"
+                        b"ame # remove trailing '/'\n    path = dd.split('/"
+                        b"')\n    index_to_remove = None\n    is_empty = Tru"
+                        b'e\n    for (i,file_dict) in enumerate(file_list):'
+                        b'\n        p = file_dict["path"]\n        if p == p'
+                        b'ath and file_dict["contents"] == "":\n            ind'
+                        b'ex_to_remove = i\n        elif p[0:len(path)] == path'
+                        b':\n            is_empty = False\n\n    if not index'
+                        b'_to_remove is None and is_empty:\n        del file_li'
+                        b'st[index_to_remove]\n\n        # write data\n      '
+                        b'  write_to_file(archivename, file_list)\n\n\ndef do'
+                        b'_cat(archivename, filename):\n    # read data\n   '
+                        b' file_list = read_from_file(archivename)\n\n    # '
+                        b"configure the path\n    path = filename.split('/'"
+                        b')\n    filename = path[-1]\n    del path[-1]\n\n    '
+                        b'contents = None\n    for (i,file_dict) in enumerate(f'
+                        b'ile_list):\n        if file_dict["path"] == path and '
+                        b'file_dict["filename"] == filename:\n            conte'
+                        b'nts = file_dict["contents"]\n\n    if not contents'
+                        b" is None:\n        print(contents.decode('utf-8')"
+                        b')\n\n\ncommand = sys.argv[1]\narchivename = sys.argv'
+                        b'[2]\n\n\nmatch command:\n    case "list":\n        do'
+                        b'_list(archivename)\n    case "copyout":\n        d'
+                        b'o_copyout(archivename, sys.argv[3], sys.argv[4])\n   '
+                        b' case "copyin":\n        do_copyin(archivename, sys.a'
+                        b'rgv[3], sys.argv[4])\n    case "rm":\n        do_r'
+                        b'm(archivename, sys.argv[3])\n    case "mkdir":\n  '
+                        b'      do_mkdir(archivename, sys.argv[3])\n    case "r'
+                        b'mdir":\n        do_rmdir(archivename, sys.argv[3]'
+                        b')\n    case "cat":\n        do_cat(archivename, sy'
+                        b's.argv[3])\n    case _:\n        print("unknown co'
+                        b'mmand {}".format(command))\n')}]
